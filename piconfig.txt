@@ -1,0 +1,83 @@
+﻿Configuration of my Raspberry Pi 3 for Python, Wifi, Camera development
+Brad Needham
+
+Install the Camera Module V2 hardware:
+See https://www.raspberrypi.org/products/camera-module-v2/
+and https://www.raspberrypi.org/learning/getting-started-with-picamera/worksheet/
+Using the two screws that came with the Pi Enclosure, fasten the camera to the enclosure.
+Pull up gently on the Pi board camera connector (a thin rectangular connector).
+Insert the camera ribbon cable into the camera connector - pay attention to the direction
+shown in the pictures on the getting-started page.
+Gently push the connector down. This clamps the ribbon cable.
+Close the Pi Enclosure, arranging the ribbon cable so it isn't pinched.
+
+Install Raspbian:
+Install Noobs on a 16GB MiniSD card for the Pi:
+  See https://www.raspberrypi.org/downloads/noobs/
+  I formatted the card on Windows using SDFormatter from the SD Association,
+  (https://www.sdcard.org/downloads/formatter_4/)
+  using Quick Format and Format Size Adjustment.
+Connect the Pi to an HDMI monitor, keyboard, and mouse.
+Connect the Pi to power.
+Select Raspbian.
+Click WiFi and choose the hotspot to connect to and its password.
+Click Install (this will take a few minutes).
+Wait for Raspbian to install and reboot.
+Once it reboots, it will come up as a graphical interface, auto-logged in as pi.
+
+Setup Raspberry Preferences:
+menu / preferences / Raspberry Pi Configuration...
+Select the Localisation tab
+ Locale: USA English
+ Timezone: US Pacific
+ Keyboard: US English
+ WiFi: US
+ Click OK
+Agree to reboot.
+
+Secure your Pi against default-password attacks:
+Choose a password for root and pi users.
+$ sudo passwd
+Enter your chosen root password (twice).
+$ passwd
+Enter the default user pi password ("raspberry" without the quotes).
+Enter your chosen pi password (twice).
+
+Choose a unique Host name for this pi so it won't be confused with others on your network.
+menu / preferences / Raspberry Pi Configuration...
+Select the System tab
+ Hostname: Enter your chosen hostname
+ Click OK
+ Agree to reboot.
+
+(Re)Setup the Wifi:
+Click the networking icon: the two-screen icon in the upper right of the screen.
+Wait for it to scan for Access points.
+Click on the one you want to connect to.
+Enter the password for that WiFi access point.
+Wait for the WiFi icon to appear, then wait for that icon to become steady (vs. blinking).
+
+Force update of the date and time, so that network browsing will work:
+$ sudo ntpd -qg
+Double-check that the date and time in the upper-right of the screen is now correct.
+Open the Web Browser (earth and pointer icon) and check that you can view www.google.com
+ Don't worry about any Upgrade messages from Chrome; we'll fix that later.
+
+Upgrade to the latest versions of software:
+$ sudo apt-get update
+$ sudo apt-get upgrade (this will take a few minutes)
+
+Enable and test the camera module:
+menu / preferences / Raspberry Pi Configuration...
+Choose the Interfaces tab.
+Enable the Camera (click on the button labeled "Enabled").
+Click OK
+Agree to Reboot your Pi.
+
+Set up git and clone the ChinchillaCam repository:
+$ git config --global user.name "your name"    (use your first and last name)
+$ git config --global user.email yourEmail@wherever  (use your email address)
+$ cd Documents
+$ git clone https://github.com/bneedhamia/ChinchillaCam.git
+
+MORE TO COME
