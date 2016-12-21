@@ -80,4 +80,10 @@ $ git config --global user.email yourEmail@wherever  (use your email address)
 $ cd Documents
 $ git clone https://github.com/bneedhamia/ChinchillaCam.git
 
-MORE TO COME
+Follow the instructions at https://www.raspberrypi.org/learning/getting-started-with-picamera/worksheet/
+menu / preferences / Raspberry Pi Configuration...
+Select the Interfaces tab.
+Enable the camera (click the text "enabled" to turn on that option).
+Click OK
+Agree to reboot.
+
