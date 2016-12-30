@@ -87,3 +87,17 @@ Enable the camera (click the text "enabled" to turn on that option).
 Click OK
 Agree to reboot.
 
+Enable SSH so you can remotely access the Pi if you wish:
+$ sudo raspi-config
+Down-arrow to "Interfacing Options"
+Press the Enter key
+Down-Arrow to "SSH"
+Press the Enter key
+In the resulting dialog, left-arrow to highlight Yes, then press Enter
+Press Enter again
+Right-arrow until Finish is selected, then press Enter
+Reboot
+
+Install OpenCV and its Python connections by following the instructions at
+http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
+
