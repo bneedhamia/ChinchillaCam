@@ -26,7 +26,7 @@ Wait for Raspbian to install and reboot.
 Once it reboots, it will come up as a graphical interface, auto-logged in as pi.
 
 Setup Raspberry Preferences:
-menu / preferences / Raspberry Pi Configuration...
+menu (the Raspberry Icon) / preferences / Raspberry Pi Configuration...
 Select the Localisation tab
  Locale: USA English
  Timezone: US Pacific
@@ -60,12 +60,20 @@ Wait for the WiFi icon to appear, then wait for that icon to become steady (vs. 
 Force update of the date and time, so that network browsing will work:
 $ sudo ntpd -qg
 Double-check that the date and time in the upper-right of the screen is now correct.
-Open the Web Browser (earth and pointer icon) and check that you can view www.google.com
+Open the Web Browser (globe icon) and check that you can view www.google.com
  Don't worry about any Upgrade messages from Chrome; we'll fix that later.
 
 Upgrade to the latest versions of software:
 $ sudo apt-get update
 $ sudo apt-get upgrade (this will take a few minutes)
+If the upgrade stops with a : prompt, press the space key until it prompts with "press q to quit",
+then press the q key. The upgrade will then continue.
+
+Enable SSH so you can remotely access the Pi if you wish:
+menu / preferences / Raspberry Pi Configuration...
+Choose the Interfaces tab.
+Enable SSH (click on the button labeled "Enabled").
+Click OK.
 
 Enable and test the camera module:
 menu / preferences / Raspberry Pi Configuration...
@@ -87,19 +95,54 @@ Enable the camera (click the text "enabled" to turn on that option).
 Click OK
 Agree to reboot.
 
-Enable SSH so you can remotely access the Pi if you wish:
-$ sudo raspi-config
-Down-arrow to "Interfacing Options"
-Press the Enter key
-Down-Arrow to "SSH"
-Press the Enter key
-In the resulting dialog, left-arrow to highlight Yes, then press Enter
-Press Enter again
-Right-arrow until Finish is selected, then press Enter
-Reboot
-
-Install OpenCV and its Python connections by following the instructions at
+Install OpenCV for Python:
+Note: the following instructions for installing OpenCV for Python are pretty much a
+copy of the intructions at 
 http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
+but with the virtual environment management omitted. I skipped the virtual environment manager
+because it gave me problems and because I plan to run only one python app on this Pi, so I don't
+expect a virtual environment manager will provide any benefit to me.
+
+$ sudo apt-get install build-essential cmake pkg-config
+$ sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+$ sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+$ sudo apt-get install libxvidcore-dev libx264-dev
+$ sudo apt-get install libgtk2.0-dev
+$ sudo apt-get install libatlas-base-dev gfortran
+$ sudo apt-get install python2.7-dev python3-dev
+
+$ cd ~
+$ wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip
+$ unzip opencv.zip
+$ wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip
+$ unzip opencv_contrib.zip
+$ wget https://bootstrap.pypa.io/get-pip.py
+$ sudo python get-pip.py
+$ pip install numpy
+
+$ cd ~/opencv-3.1.0/
+$ mkdir build
+$ cd build
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_PYTHON_EXAMPLES=ON \
+ -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.1.0/modules -D BUILD_EXAMPLES=ON ..
+
+I had problems with make -j4 hanging the Pi, so I just do a make and suffer the several hour time delay.
+$ make >make.out 2>&1&
+$ tail -f make.out
+$ sudo make install
+$ sudo ldconfig
+$ ls -l /usr/local/lib/python2.7/site-packages/
+The resultant list should include cv2.so
+$ python
+>>> import cv2
+>>> cv2.__version__
+It should print the OpenCV version number, such as '3.1.0'
+>>>exit()
+
+Clean up:
+$ cd ~
+$ rm -f opencv.zip opencv_contrib.zip
+$ rm -rf opencv-3.1.0 opencv_contrib-3.1.0
 
 Install the PiCamera & PiCamera Array Python libraries so Python can read camera frames into OpenCV:
 $ pip install "picamera[array]"
