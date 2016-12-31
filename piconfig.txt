@@ -101,3 +101,6 @@ Reboot
 Install OpenCV and its Python connections by following the instructions at
 http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
 
+Install the PiCamera & PiCamera Array Python libraries so Python can read camera frames into OpenCV:
+$ pip install "picamera[array]"
+
