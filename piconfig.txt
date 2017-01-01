@@ -116,8 +116,10 @@ $ wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip
 $ unzip opencv.zip
 $ wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip
 $ unzip opencv_contrib.zip
+
 $ wget https://bootstrap.pypa.io/get-pip.py
 $ sudo python get-pip.py
+
 $ pip install numpy
 
 $ cd ~/opencv-3.1.0/
@@ -127,12 +129,20 @@ $ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTAL
  -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.1.0/modules -D BUILD_EXAMPLES=ON ..
 
 I had problems with make -j4 hanging the Pi, so I just do a make and suffer the several hour time delay.
+The following commands takes several hours to complete:
 $ make >make.out 2>&1&
 $ tail -f make.out
+Note: tail will not exit. Type ^C (Ctrl+C) when you see the output saying that it's finished.
+
 $ sudo make install
 $ sudo ldconfig
-$ ls -l /usr/local/lib/python2.7/site-packages/
+
+Test the OpenCV installation:
+$ ls -l /usr/local/lib/python2.7/dist-packages
 The resultant list should include cv2.so
+If it doesn't, try
+$ ls -l /usr/local/lib/python2.7/site-packages/
+
 $ python
 >>> import cv2
 >>> cv2.__version__
