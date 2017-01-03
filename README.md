@@ -14,4 +14,6 @@ and upload any frame that has (the right) motion in it.
 * ProjectDiary.odt = the day-to-day, detailed unfolding of the project over time
 * BillOfMaterials.ods = parts list, with prices and sources
 * piconfig.txt = step-by-step instructions for installing and configuring the Raspberry Pi 3, Camera Module V2, and OpenCV for camera work.
+* motioncam.cfg = example configuration file. Copy this file to your home directory (/home/pi/).
+The fields in motioncam.cfg are explained in the config file parsing code in the .py file.
 
