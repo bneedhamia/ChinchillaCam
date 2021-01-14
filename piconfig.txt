@@ -11,37 +11,43 @@ shown in the pictures on the getting-started page.
 Gently push the connector down. This clamps the ribbon cable.
 Close the Pi Enclosure, arranging the ribbon cable so it isn't pinched.
 
-Install Raspbian:
-Install Noobs on a 16GB MiniSD card for the Pi:
-  See https://www.raspberrypi.org/downloads/noobs/
-  I formatted the card on Windows using SDFormatter from the SD Association,
-  (https://www.sdcard.org/downloads/formatter_4/)
-  using Quick Format and Format Size Adjustment.
+Install Raspbian on a 16GB micro SD card:
+  Plug the SD card into your laptop. This step usually requires an adapter.
+  Browse to https://www.raspberrypi.org/downloads/
+  Click on the link for Raspberry Pi Imager for your host machine (e.g., Windows).
+  Open (run) the downloaded installer, e.g., imager_1.4.exe
+  Run the installed Raspberry Pi Imager.
+  Click Choose OS, and select Raspberry Pi OS 32-bit...recommended.
+  Click Choose SD Card, and select your plugged in SD card.
+  Click Write, and Yes. A Raspberry Pi installer will be copied to the SD card.
+
+If the Raspberry Pi Imager formatting fails, format the card with SD Formatter from the SD Association.
+Windows normal formatter will not work:
+  Browse to https://www.sdcard.org/downloads/formatter/
+  Click on the SD Memory Card Formatter for your host machine (e.g., Windows).
+  Run that formatter, using Quick Format and if available, Size Adjustment.
+  Try the Raspberry Pi Imager again.
+
+Once the imager succeeds, remove the SD Card and plug the Micro SD card into the Raspberry Pi.
 Connect the Pi to an HDMI monitor, keyboard, and mouse.
 Connect the Pi to power.
-Select Raspbian.
-Click WiFi and choose the hotspot to connect to and its password.
-Click Install (this will take a few minutes).
-Wait for Raspbian to install and reboot.
-Once it reboots, it will come up as a graphical interface, auto-logged in as pi.
-
-Setup Raspberry Preferences:
-menu (the Raspberry Icon) / preferences / Raspberry Pi Configuration...
-Select the Localisation tab
- Locale: USA English
- Timezone: US Pacific
- Keyboard: US English
- WiFi: US
- Click OK
-Agree to reboot.
+Follow the screen instructions to select a set of options:
+My choices:
+  Country: United States
+  Language: American English
+  Timezone: Los Angeles
+  Use English Language
+  Use US Keyboard
+When prompted, set the pi account password to something you choose, to avoid default-password attacks.
+Continue answering questions to...
+  Remove the screen black border.
+  Select a wireless network and enter its existing password.
+  Update the OS and applications (this step will take a few minutes).
 
 Secure your Pi against default-password attacks:
-Choose a password for root and pi users.
+Choose a password for root.
 $ sudo passwd
 Enter your chosen root password (twice).
-$ passwd
-Enter the default user pi password ("raspberry" without the quotes).
-Enter your chosen pi password (twice).
 
 Choose a unique Host name for this pi so it won't be confused with others on your network.
 menu / preferences / Raspberry Pi Configuration...
@@ -49,19 +55,6 @@ Select the System tab
  Hostname: Enter your chosen hostname
  Click OK
  Agree to reboot.
-
-(Re)Setup the Wifi:
-Click the networking icon: the two-screen icon in the upper right of the screen.
-Wait for it to scan for Access points.
-Click on the one you want to connect to.
-Enter the password for that WiFi access point.
-Wait for the WiFi icon to appear, then wait for that icon to become steady (vs. blinking).
-
-Force update of the date and time, so that network browsing will work:
-$ sudo ntpd -qg
-Double-check that the date and time in the upper-right of the screen is now correct.
-Open the Web Browser (globe icon) and check that you can view www.google.com
- Don't worry about any Upgrade messages from Chrome; we'll fix that later.
 
 Upgrade to the latest versions of software:
 $ sudo apt-get update
@@ -75,25 +68,19 @@ Choose the Interfaces tab.
 Enable SSH (click on the button labeled "Enabled").
 Click OK.
 
-Enable and test the camera module:
+Follow the instructions at https://www.raspberrypi.org/learning/getting-started-with-picamera/worksheet/ to install and test the camera.
+
 menu / preferences / Raspberry Pi Configuration...
-Choose the Interfaces tab.
-Enable the Camera (click on the button labeled "Enabled").
+Select the Interfaces tab.
+Enable the camera (click the text "enabled" to turn on that option).
 Click OK
-Agree to Reboot your Pi.
+Agree to reboot.
 
 Set up git and clone the ChinchillaCam repository:
 $ git config --global user.name "your name"    (use your first and last name)
 $ git config --global user.email yourEmail@wherever  (use your email address)
 $ cd Documents
 $ git clone https://github.com/bneedhamia/ChinchillaCam.git
-
-Follow the instructions at https://www.raspberrypi.org/learning/getting-started-with-picamera/worksheet/
-menu / preferences / Raspberry Pi Configuration...
-Select the Interfaces tab.
-Enable the camera (click the text "enabled" to turn on that option).
-Click OK
-Agree to reboot.
 
 Install OpenCV for Python:
 Note: the following instructions for installing OpenCV for Python are pretty much a
@@ -105,6 +92,8 @@ expect a virtual environment manager will provide any benefit to me.
 
 $ sudo apt-get install build-essential cmake pkg-config
 $ sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+
+============ STOPPED HERE: Should we install (have we already?) python 3 instead of 2.x?
 $ sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 $ sudo apt-get install libxvidcore-dev libx264-dev
 $ sudo apt-get install libgtk2.0-dev
